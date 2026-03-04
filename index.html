@@ -1,31 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jss Water service</title>
+    <title>JSS Water Service</title>
 </head>
 <body>
 
+<div id="app"></div>
+
 <script>
 
-    const serverUrl = "https://achieving-artists-payments-village.trycloudflare.com";
+const serverUrl = "https://gentle-query-bytes-revised.trycloudflare.com";
 
-    const jssId = localStorage.getItem("jssId");
+const token = localStorage.getItem("jssToken");
 
-    if (!jssId) {
-        window.location.href = serverUrl + "/loginPage";
-    } else {
-        // optional: verify token with server
-        fetch(serverUrl + "/verify?jssId=" + jssId)
-        .then(res => res.json())
-        .then(data => {
-            if (!data.valid) {
-                window.location.href = serverUrl + "/loginPage";
-            }
-        })
-        .catch(() => {
-            window.location.href = serverUrl + "/loginPage";
-        });
-    }
+if (!token) {
+    loadLogin();
+} else {
+    verifyToken(token);
+}
+
+function verifyToken(token) {
+    fetch(serverUrl + "/verify?token=" + token)
+    .then(res => res.json())
+    .then(data => {
+        if (data.valid) {
+            loadDashboard();
+        } else {
+            loadLogin();
+        }
+    })
+    .catch(() => loadLogin());
+}
+
+function loadLogin() {
+    document.getElementById("app").innerHTML = `
+        <h2>Login</h2>
+        <input id="userId" placeholder="User ID"><br><br>
+        <input id="otp" placeholder="OTP"><br><br>
+        <button onclick="login()">Login</button>
+    `;
+}
+
+function login() {
+    const userId = document.getElementById("userId").value;
+    const otp = document.getElementById("otp").value;
+
+    fetch(serverUrl + "/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({userId, otp})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.token) {
+            localStorage.setItem("jssToken", data.token);
+            loadDashboard();
+        } else {
+            alert("Invalid Login");
+        }
+    });
+}
+
+function loadDashboard() {
+    document.getElementById("app").innerHTML = `
+        <h1>Dashboard</h1>
+        <button onclick="logout()">Logout</button>
+    `;
+}
+
+function logout() {
+    localStorage.removeItem("jssToken");
+    loadLogin();
+}
 
 </script>
 

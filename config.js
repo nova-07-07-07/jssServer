@@ -1,1 +1,1 @@
-export const API_URL = "https://achieving-artists-payments-village.trycloudflare.com";
+export const API_URL = "https://gentle-query-bytes-revised.trycloudflare.com";
