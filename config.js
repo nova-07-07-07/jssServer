@@ -1,1 +1,1 @@
-export const API_URL = "https://expense-boulder-combat-season.trycloudflare.com";
+export const API_URL = "https://demographic-expert-sort-probability.trycloudflare.com";
