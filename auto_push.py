@@ -32,3 +32,6 @@ if url:
     subprocess.run(["git", "push"])
 
     print("Updated & pushed:", url)
+
+while True:
+    time.sleep(10)
