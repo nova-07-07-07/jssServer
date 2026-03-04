@@ -23,6 +23,19 @@ for line in process.stdout:
 
 if url:
     # Update file
+
+    # Update url in index.html file const serverUrl = "https://faced-perhaps-champion-mere.trycloudflare.com";
+
+    with open("index.html", "r") as f:
+        content = f.read()
+
+    new_content = re.sub(r'const serverUrl = ".*";', f'const serverUrl = "{url}";', content)
+
+    with open("index.html", "w") as f:
+        f.write(new_content)
+
+    # Update API_URL in config.js file export const API_URL = "https://faced-perhaps-champion-mere.trycloudflare.com";
+
     with open("config.js", "w") as f:
         f.write(f'export const API_URL = "{url}";\n')
 

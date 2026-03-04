@@ -1,1 +1,1 @@
-export const API_URL = "https://faced-perhaps-champion-mere.trycloudflare.com";
+export const API_URL = "https://achieving-artists-payments-village.trycloudflare.com";

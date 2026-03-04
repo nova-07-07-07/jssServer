@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSS Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form action="/login" method="POST">
+    <label>User ID:</label>
+    <input type="number" name="userId" id="userId" required>
+    <br><br>
+
+    <label>OTP:</label>
+    <input type="number" name="otp" required>
+    <button type="button" onclick="sendOTP()">Send OTP</button>
+    <br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+<script>
+function sendOTP() {
+    const userId = document.getElementById("userId").value;
+
+    fetch("/sendOTP", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({userId: userId})
+    })
+    .then(res => res.json())
+    .then(data => alert(data.status));
+}
+</script>
+
+</body>
+</html>
