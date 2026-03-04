@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jss Water service</title>
+</head>
+<body>
+
+<script>
+
+    const serverUrl = "https://merger-additionally-weeks-tell.trycloudflare.com";
+
+    const jssId = localStorage.getItem("jssId");
+
+    if (!jssId) {
+        window.location.href = serverUrl + "/loginPage";
+    } else {
+        // optional: verify token with server
+        fetch(serverUrl + "/verify?jssId=" + jssId)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.valid) {
+                window.location.href = serverUrl + "/loginPage";
+            }
+        })
+        .catch(() => {
+            window.location.href = serverUrl + "/loginPage";
+        });
+    }
+
+</script>
+
+</body>
+</html>
